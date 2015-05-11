@@ -36,7 +36,7 @@ io_socket.on('connection', function (socket) {
     });
 
     socket.on('move-c-s', function (data) {
-        console.log('on move');
+        console.log('on move', data);
         socket.broadcast.emit('move-s-c', data);
     });
 
