@@ -1,8 +1,11 @@
 // Browser-client-javascript-code:
 var socket = io.connect(); 
 
-socket.on('message', function (data_json) {
-  // console.log(data_json);
+var clientId = 'clientId_undef';
+
+socket.on('welcome', function (data_json) {
+  console.log('client welcome,client ID:', data_json);
+  clientId = data_json.clientId;
   socket.emit('pong', { my: 'data-pong' });
 });
 
@@ -29,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     theAt.style.left = x+"px"; 
     theAt.style.top  = y+"px"; 
 
-    socket.emit('move-c-s', { x: x, y: y }); // .broadcast. does not belong here.
+    socket.emit('move-c-s', { x: x, y: y, clientId: clientId }); 
   }); // on-keydown.
 
 
@@ -38,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     x = data.x; y = data.y; // Transfer to our model-copy.
     theAt.style.left = x+"px"; // Update our view.
     theAt.style.top  = y+"px"; 
+    theAt.innerHTML = data.clientId;
   });
 
 

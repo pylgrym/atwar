@@ -12,14 +12,25 @@ server = app.listen(app.get('port'), function() {
 
 // Added this:
 io = require('socket.io');  // JG, added in www script.
-socket = io.listen(server); // JG, added in www script.
+io_socket = io.listen(server); // JG, added in www script.
 
-socket.on('connection', function (socket) {
-    socket.emit('message', { message: 'Initial welcome' });
+
+var shame1=1;
+function idCounter() {
+  var tmp  = shame1;
+  shame1 += 1;
+  return tmp;
+}
+
+
+io_socket.on('connection', function (socket) {
+    var mySocketId = idCounter();
+    // console.log(socket)
+    socket.emit('welcome', { message: 'Initial welcome', clientId: mySocketId });
 
     // When we receive 'send' stuff, we broadcast/relay it onwards:
     socket.on('pong', function (data) {
-        console.log('on pong (server receive)',data);
+        /// console.log('on pong (server receive)',data);
         // let's not flood ourselves.
         // socket.emit('message', data);
     });
