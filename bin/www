@@ -1,0 +1,31 @@
+#!/usr/bin/env node
+var debug = require('debug')('xp1');
+var app = require('../app');
+
+var io, socket, server;
+
+app.set('port', process.env.PORT || 3000);
+
+server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+
+// Added this:
+io = require('socket.io');  // JG, added in www script.
+socket = io.listen(server); // JG, added in www script.
+
+socket.on('connection', function (socket) {
+    socket.emit('message', { message: 'Initial welcome' });
+
+    // When we receive 'send' stuff, we broadcast/relay it onwards:
+    socket.on('pong', function (data) {
+        console.log('on pong');
+        // let's not flood ourselves.
+        // socket.emit('message', data);
+    });
+
+    setInterval( function() {
+        socket.emit('message', {'date': new Date()});
+    }, 1000);    
+});
+

@@ -25,3 +25,27 @@ build/Release
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
+
+
+###########
+# paste from http://anotheruiguy.gitbooks.io/nodeexpreslibsass_from-scratch/content/demo/vc.html
+
+# OS generated files
+####################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Generated CSS output
+#######################
+public/stylesheets/*.css
+public/stylesheets/*.css.map
+
+# Package dependencies
+######################
+node_modules/
+bower_components
