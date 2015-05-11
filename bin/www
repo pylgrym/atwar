@@ -19,13 +19,18 @@ socket.on('connection', function (socket) {
 
     // When we receive 'send' stuff, we broadcast/relay it onwards:
     socket.on('pong', function (data) {
-        console.log('on pong');
+        console.log('on pong (server receive)',data);
         // let's not flood ourselves.
         // socket.emit('message', data);
     });
 
+    socket.on('move-c-s', function (data) {
+        console.log('on move');
+        socket.broadcast.emit('move-s-c', data);
+    });
+
     setInterval( function() {
         socket.emit('message', {'date': new Date()});
-    }, 1000);    
+    }, 10000);    
 });
 
