@@ -1,0 +1,15 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: lightgrey;
+  position: relative;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#at {
+  position: absolute;
+  color: red;
+}
