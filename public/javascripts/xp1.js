@@ -73,12 +73,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.addEventListener('keydown', function(e) {
     var mob = mobs[ownClientId];
+    //                    FireFox             Chrome
+    //console.log(e.char, e.key, e.charCode, e.keyCode, e.code);
 
-    switch (e.key) {
+    /*
+    switch (e.key) { // Firefox..? Doesn't work for chrome.
     case 'ArrowUp'   : mob.y-=d; break; 
     case 'ArrowDown' : mob.y+=d; break;
     case 'ArrowRight': mob.x+=d; break;
     case 'ArrowLeft':  mob.x-=d; break;
+    }
+    */
+    switch (e.keyCode) { // Chrome..? Also works in FF.
+    case 38 : mob.y-=d; break; // 'ArrowUp'  
+    case 40 : mob.y+=d; break; // 'ArrowDown'
+    case 39:  mob.x+=d; break;  // 'ArrowRight'
+    case 37:  mob.x-=d; break; // 'ArrowLeft'
     }
     moveMob(mob.id); // ATM necessary, because broadcast doesn't hit yourself..
     socket.emit('move-c-s', mob);      
