@@ -85,10 +85,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     */
     switch (e.keyCode) { // Chrome..? Also works in FF.
-    case 38 : mob.y-=d; break; // 'ArrowUp'  
-    case 40 : mob.y+=d; break; // 'ArrowDown'
-    case 39:  mob.x+=d; break;  // 'ArrowRight'
     case 37:  mob.x-=d; break; // 'ArrowLeft'
+    case 38 : mob.y-=d; break; // 'ArrowUp'  
+    case 39:  mob.x+=d; break; // 'ArrowRight'
+    case 40 : mob.y+=d; break; // 'ArrowDown'
     }
     moveMob(mob.id); // ATM necessary, because broadcast doesn't hit yourself..
     socket.emit('move-c-s', mob);      
