@@ -1,7 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: lightgrey;
+  background-color: grey;
   position: relative;
 }
 
@@ -9,12 +9,7 @@ a {
   color: #00B7FF;
 }
 
-#at {
-  position: absolute;
-  color: red;
-}
-
 .atsign {
-  position: absolute;
-  color: blue;
+ position: absolute;
+ font-weight: 900;
 }
