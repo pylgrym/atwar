@@ -28,20 +28,11 @@ io_socket.on('connection', function (socket) {
     // console.log(socket)
     socket.emit('welcome', { message: 'Initial welcome', clientId: mySocketId });
 
-    // When we receive 'send' stuff, we broadcast/relay it onwards:
-    socket.on('pong', function (data) {
-        /// console.log('on pong (server receive)',data);
-        // let's not flood ourselves.
-        // socket.emit('message', data);
-    });
-
     socket.on('move-c-s', function (data) {
         console.log('on move', data);
         socket.broadcast.emit('move-s-c', data);
     });
 
-    setInterval( function() {
-        socket.emit('message', {'date': new Date()});
-    }, 10000);    
+    // setInterval( function() { socket.emit('message', {'date': new Date()}); }, 10000);    
 });
 

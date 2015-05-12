@@ -1,15 +1,15 @@
 // Browser-client-javascript-code:
-var socket = io.connect(); // how do we know we have io available?! is it layout.jade load-order?
-
+var socket;
 
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOMContentLoaded');
 
-  var theAts = document.getElementById("atCont");
   var d = 4; // delta-move-size.
   var mobElms = {}; // DOM elements.
   var mobs = {}; // Model objects.
   var ownClientId = 0; // undefined at start.
+
+  socket = io.connect(); // how do we know we have io available?! is it layout.jade load-order?
 
   function moveMob(mob_id) {
     var mob = mobs[mob_id];
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
       x: 50, 
       y: 50, 
       id: ownClientId,
-      mobColor: mobColor 
+      mobColor: mobColor      
     };
 
     mobs[mob.id] = mob;
