@@ -93,60 +93,64 @@ function() { // An anonymous function, to yield an isolated scope for our module
     		minx=maxx=pos_x; miny=maxy=pos_y;
     	}
 
-        ctx.fillStyle = "#110";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.font = "12px sans-serif"; // monospace"; //serif";
+      ctx.fillStyle = "#110";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = "12px sans-serif"; // monospace"; //serif";
 
-        // Thoughts: I might as well erase full rect (it's doublebuffered).
-        // Thoughts: only change ctx-color if different.
-		for (i=miny; i<=maxy; ++i) { // map.length
-			y = i*side;
-			row = (i != coords.y) ? map[i] : this.atRow(i);				
-            for (j=minx; j<=maxx; ++j) { // row.length
-              x = j*side;
-              ctx.fillRect(x,y,side,side);
-              //ctx.fillText(row[j],x+side*0.5,y+side*0.5);
-            } // for j.
-		} // for i.
+      // Thoughts: I might as well erase full rect (it's doublebuffered).
+      // Thoughts: only change ctx-color if different.
+  		for (i=miny; i<=maxy; ++i) { // map.length
+  			y = i*side;
+  			row = (i != coords.y) ? map[i] : this.atRow(i);				
+        for (j=minx; j<=maxx; ++j) { // row.length
+          x = j*side;
+          ctx.fillRect(x,y,side,side);
+          //ctx.fillText(row[j],x+side*0.5,y+side*0.5);
+        } // for j.
+  		} // for i.
 
-        ctx.fillStyle = "orange";
-		for (i=miny; i<=maxy; ++i) { // map.length
-			y = i*side;
-			row = (i != coords.y) ? map[i] : this.atRow(i);				
-            for (j=minx; j<=maxx; ++j) { // row.length
-              x = j*side;
-              curColor = (i==coords.y && j==coords.x) ? "#ccf" : "#f80";
-              if (ctx.fillStyle != curColor) { ctx.fillStyle = curColor; }
-              //ctx.fillRect(x,y,side,side);
-              ctx.fillText(row[j],x+side*0.5,y+side*0.5);
-            } // for j.
-		} // for i.
-    }, // map2screen.
+      ctx.fillStyle = "orange";
+  		for (i=miny; i<=maxy; ++i) { // map.length
+  			y = i*side;
+  			row = (i != coords.y) ? map[i] : this.atRow(i);				
+        for (j=minx; j<=maxx; ++j) { // row.length
+          x = j*side;
+          curColor = (i==coords.y && j==coords.x) ? "#ccf" : "#0d6"; // "#f80";
+          if (ctx.fillStyle != curColor) { ctx.fillStyle = curColor; }
+          //ctx.fillRect(x,y,side,side);
+          ctx.fillText(row[j],x+side*0.5,y+side*0.5);
+        } // for j.
+  		} // for i.
+    }, // map2screenB.
 
-	subst: function(str, pos, sub) { // a fix for javascript not having modifiable strings (replace a char).
-	  // (Replace char at 'pos' in 'str' with 'sub'.)
-	  var left, right; // string parts surrounding part to be replaced.
+  	subst: function(str, pos, sub) { // a fix for javascript not having modifiable strings (replace a char).
+  	  // (Replace char at 'pos' in 'str' with 'sub'.)
+  	  var left, right; // string parts surrounding part to be replaced.
 
-	  // If pos is outside string, then leave string unaffected:
-	  if (pos < 0) { return str; }
-	  if (pos >= str.length) { return str; }
+  	  // If pos is outside string, then leave string unaffected:
+  	  if (pos < 0) { return str; }
+  	  if (pos >= str.length) { return str; }
 
-      // Construct a new string, with left and right parts around new 'sub'	char:  
-	  left  = str.substr(0,pos);
-	  right = str.substr(pos+1);
-	  return (left+sub+right);
-	}, // subst
+        // Construct a new string, with left and right parts around new 'sub'	char:  
+  	  left  = str.substr(0,pos);
+  	  right = str.substr(pos+1);
+  	  return (left+sub+right);
+  	}, // subst
 
-    keymove: function(evkey,coord) { 
+    keymove: function(ev,coord) { 
       var newpos = { x: coord.x, y: coord.y };
-	  switch (evkey) {
-	  case 'ArrowUp'   : newpos.y = newpos.y-1; break; 
-	  case 'ArrowDown' : newpos.y = newpos.y+1; break;
-	  case 'ArrowRight': newpos.x = newpos.x+1; break;
-	  case 'ArrowLeft':  newpos.x = newpos.x-1; break;
-	  default: return 0; // Ignore other keys.  zero counts as false.
-	  }
+      switch (ev.keyCode) { // Chrome..? Also works in FF.
+      case 37:  newpos.x-=1; break; // 'ArrowLeft'
+      case 38 : newpos.y-=1; break; // 'ArrowUp'  
+      case 39:  newpos.x+=1; break; // 'ArrowRight'
+      case 40 : newpos.y+=1; break; // 'ArrowDown'
+  	  // case 'ArrowUp'   : newpos.y = newpos.y-1; break; 
+  	  // case 'ArrowDown' : newpos.y = newpos.y+1; break;
+  	  // case 'ArrowRight': newpos.x = newpos.x+1; break;
+  	  // case 'ArrowLeft':  newpos.x = newpos.x-1; break;
+  	  default: return 0; // Ignore other keys.  zero counts as false.
+  	  }
       return newpos;
     },
 
@@ -158,7 +162,7 @@ function() { // An anonymous function, to yield an isolated scope for our module
     posBlocked: function(coord) { return (this.mapAtPos(coord) == '#'); },     
 
     atRow: function() { 
-        return this.subst( map[coords.y], coords.x, '@');
+      return this.subst( map[coords.y], coords.x, '@');
     }, 
 
     updatePos: function(newcoord) { 

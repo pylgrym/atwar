@@ -73,6 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.addEventListener('keydown', function(e) {
     var mob = mobs[ownClientId];
+    //console.log('kd, oi:', ownClientId);
+    
     //                    FireFox             Chrome
     //console.log(e.char, e.key, e.charCode, e.keyCode, e.code);
 
@@ -114,9 +116,8 @@ document.addEventListener('keydown', function(e) {
   var newpos,oldpos;
 
   // if (!Map.initDone()) { Map.init(); }
-  
   oldpos = Map.getCoords();
-  newpos = Map.keymove(e.key, oldpos);
+  newpos = Map.keymove(e, oldpos);
   if (!newpos) { return; } // If not a position-change, don't do further stuff.
 
   // If we reach here, we've used a (arrow) keypress.
