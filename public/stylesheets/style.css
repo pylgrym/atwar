@@ -1,7 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: grey;
+  background-color: #103;
   position: relative;
 }
 
@@ -12,4 +12,10 @@ a {
 .atsign {
  position: absolute;
  font-weight: 900;
+}
+
+
+/* make the canvas stand out: */
+canvas {
+	border: 2px dotted red;
 }

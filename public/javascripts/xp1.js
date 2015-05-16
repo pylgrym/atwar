@@ -91,3 +91,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 }); // on-DCL.
+
+
+
+
+
+
+// From mexa.html:
+document.addEventListener('DOMContentLoaded',function() { Map.init(); });
+
+document.addEventListener('keydown', function(e) {
+  var newpos,oldpos;
+
+  // if (!Map.initDone()) { Map.init(); }
+  
+  oldpos = Map.getCoords();
+  newpos = Map.keymove(e.key, oldpos);
+  if (!newpos) { return; } // If not a position-change, don't do further stuff.
+
+  // If we reach here, we've used a (arrow) keypress.
+  e.preventDefault(); // Avoid browser scrolling.
+
+  // If the map is blocked in that direction, abandon the move-attempt:
+  if (Map.posBlocked(newpos)) { console.log("blocked dir."); return; }
+
+  Map.updatePos(newpos);
+  Map.map2screenB(oldpos.x, oldpos.y);
+  Map.map2screenB(newpos.x, newpos.y);
+});
