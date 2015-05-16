@@ -1,15 +1,15 @@
 // Browser-client-javascript-code:
-var socket = io.connect(); // how do we know we have io available?! is it layout.jade load-order?
-
+var socket;
 
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOMContentLoaded');
 
-  var theAts = document.getElementById("atCont");
   var d = 4; // delta-move-size.
   var mobElms = {}; // DOM elements.
   var mobs = {}; // Model objects.
   var ownClientId = 0; // undefined at start.
+
+  socket = io.connect(); // how do we know we have io available?! is it layout.jade load-order?
 
   function moveMob(mob_id) {
     var mob = mobs[mob_id];
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
       x: 50, 
       y: 50, 
       id: ownClientId,
-      mobColor: mobColor 
+      mobColor: mobColor      
     };
 
     mobs[mob.id] = mob;
@@ -73,12 +73,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.addEventListener('keydown', function(e) {
     var mob = mobs[ownClientId];
+    //                    FireFox             Chrome
+    //console.log(e.char, e.key, e.charCode, e.keyCode, e.code);
 
-    switch (e.key) {
+    /*
+    switch (e.key) { // Firefox..? Doesn't work for chrome.
     case 'ArrowUp'   : mob.y-=d; break; 
     case 'ArrowDown' : mob.y+=d; break;
     case 'ArrowRight': mob.x+=d; break;
     case 'ArrowLeft':  mob.x-=d; break;
+    }
+    */
+    switch (e.keyCode) { // Chrome..? Also works in FF.
+    case 37:  mob.x-=d; break; // 'ArrowLeft'
+    case 38 : mob.y-=d; break; // 'ArrowUp'  
+    case 39:  mob.x+=d; break; // 'ArrowRight'
+    case 40 : mob.y+=d; break; // 'ArrowDown'
     }
     moveMob(mob.id); // ATM necessary, because broadcast doesn't hit yourself..
     socket.emit('move-c-s', mob);      
