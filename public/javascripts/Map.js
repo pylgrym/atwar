@@ -68,24 +68,7 @@ function() { // An anonymous function, to yield an isolated scope for our module
   ctx,
   module = { // Our actual module as a hash:
 
-    test1: function(a) { return a*2; }, // test1
-
-    example: function(a) { return a+1; }, 
-
-    //   map2screen: function() {
-    //   	var i,row;
-  		// for (i=0; i<map.length; ++i) {
-  		// 	if (i != coords.y) {
-  		// 	  row = map[i];
-  		// 	} else {
-  		// 	  row = this.atRow(i);				
-  		// 	}
-
-  		// 	children[i].textContent = row;	
-  		// } // for i.
-    //   }, // map2screen.
-
-    map2screenB: function(pos_x, pos_y) {
+    map2screenB: function(pos_x, pos_y) { // "pos is the cell we invalidate/draw"
     	var i,j,row,y,x,side=12, curColor, 
     	  minx=0,miny=0,maxx=map[0].length-1,maxy=map.length-1;
 
@@ -122,6 +105,11 @@ function() { // An anonymous function, to yield an isolated scope for our module
           ctx.fillText(row[j],x+side*0.5,y+side*0.5);
         } // for j.
   		} // for i.
+
+      // fixme: draw @'s: Can't do, while coords are in xp1 instead of map.
+      for (i in mobs) {
+        ctx.fillText('§',i.x+side*0.5,i.y+side*0.5);        
+      }      
     }, // map2screenB.
 
   	subst: function(str, pos, sub) { // a fix for javascript not having modifiable strings (replace a char).
@@ -145,16 +133,13 @@ function() { // An anonymous function, to yield an isolated scope for our module
       case 38 : newpos.y-=1; break; // 'ArrowUp'  
       case 39:  newpos.x+=1; break; // 'ArrowRight'
       case 40 : newpos.y+=1; break; // 'ArrowDown'
-  	  // case 'ArrowUp'   : newpos.y = newpos.y-1; break; 
-  	  // case 'ArrowDown' : newpos.y = newpos.y+1; break;
-  	  // case 'ArrowRight': newpos.x = newpos.x+1; break;
-  	  // case 'ArrowLeft':  newpos.x = newpos.x-1; break;
   	  default: return 0; // Ignore other keys.  zero counts as false.
   	  }
       return newpos;
     },
 
     initDone: function() { return isInitDone; }, 
+
     getCoords: function() { return coords; }, 
 
     mapAtPos: function(coord) { return map[coord.y][coord.x]; }, 

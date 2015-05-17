@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var d = 4; // delta-move-size.
   var mobElms = {}; // DOM elements.
-  var mobs = {}; // Model objects.
+  var mobs = {}; // Model objects. // PROBLEM: Must go to shared module.
   var ownClientId = 0; // undefined at start.
 
   socket = io.connect(); // how do we know we have io available?! is it layout.jade load-order?
@@ -68,39 +68,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
   socket.on('welcome', function (data_json) {
     console.log('client-welcome, assigned client ID:', data_json);
-    initMob(data_json.clientId);
+    initMob(data_json.clientId); 
+    // problem - this should give me ALL mobs, instead of just own mob.
+    // (we need own id as well as info on all other mobs.)
+  });
+
+  socket.on('move-s-c', function (mob) {
+    mobs[mob.id] = mob; // Transfer to our model-copy
+    moveMob(mob.id); // JG: Consider: instead of this 'wholesale transfer', could we just transfer coords of foreign mob?
   });
 
   document.addEventListener('keydown', function(e) {
     var mob = mobs[ownClientId];
-    //console.log('kd, oi:', ownClientId);
-    
-    //                    FireFox             Chrome
-    //console.log(e.char, e.key, e.charCode, e.keyCode, e.code);
-
-    /*
-    switch (e.key) { // Firefox..? Doesn't work for chrome.
-    case 'ArrowUp'   : mob.y-=d; break; 
-    case 'ArrowDown' : mob.y+=d; break;
-    case 'ArrowRight': mob.x+=d; break;
-    case 'ArrowLeft':  mob.x-=d; break;
-    }
-    */
     switch (e.keyCode) { // Chrome..? Also works in FF.
-    case 37:  mob.x-=d; break; // 'ArrowLeft'
-    case 38 : mob.y-=d; break; // 'ArrowUp'  
-    case 39:  mob.x+=d; break; // 'ArrowRight'
-    case 40 : mob.y+=d; break; // 'ArrowDown'
+    case 37: mob.x-=d; break; // 'ArrowLeft'
+    case 38: mob.y-=d; break; // 'ArrowUp'  
+    case 39: mob.x+=d; break; // 'ArrowRight'
+    case 40: mob.y+=d; break; // 'ArrowDown'
     }
     moveMob(mob.id); // ATM necessary, because broadcast doesn't hit yourself..
     socket.emit('move-c-s', mob);      
   }); // on-keydown.
-
-  socket.on('move-s-c', function (mob) {
-    mobs[mob.id] = mob; // Transfer to our model-copy
-    moveMob(mob.id);
-  });
-
 
 }); // on-DCL.
 
