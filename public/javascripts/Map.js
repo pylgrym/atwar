@@ -86,7 +86,7 @@ function() { // An anonymous function, to yield an isolated scope for our module
       // Thoughts: only change ctx-color if different.
   		for (i=miny; i<=maxy; ++i) { // map.length
   			y = i*side;
-  			row = (i != coords.y) ? map[i] : this.atRow(i);				
+  			row = map[i]; // (i != coords.y) ? map[i] : this.atRow(i);				
         for (j=minx; j<=maxx; ++j) { // row.length
           x = j*side;
           ctx.fillRect(x,y,side,side);
@@ -133,7 +133,8 @@ function() { // An anonymous function, to yield an isolated scope for our module
   	  return (left+sub+right);
   	}, // subst
 
-    keymove: function(ev,coord) { 
+    /* DISABLED TOGETHER!
+    keymove: function(ev, coord) { // FIXME, MUST GO!
       var newpos = { x: coord.x, y: coord.y };
       switch (ev.keyCode) { // Chrome..? Also works in FF.
       case 37:  newpos.x-=1; break; // 'ArrowLeft'
@@ -145,56 +146,33 @@ function() { // An anonymous function, to yield an isolated scope for our module
       return newpos;
     },
 
-    initDone: function() { return isInitDone; }, 
+    getCoords: function() { return coords; }, // FIXME, MUST GO!    
 
-    getCoords: function() { return coords; }, 
+    updatePos: function(newcoord) {  coords = newcoord; },     // FIXME, MUST GO!
+
+    // atRow: function() {  return this.subst( map[coords.y], coords.x, '@'); }, // FIXME, MUST GO!
+    */
+
+    initDone: function() { return isInitDone; }, 
 
     mapAtPos: function(coord) { return map[coord.y][coord.x]; }, 
 
     posBlocked: function(coord) { return (this.mapAtPos(coord) == '#'); },     
 
-    atRow: function() { 
-      var retval;
-      // console.log('atRow',coords);
-      retval = this.subst( map[coords.y], coords.x, '@');
-      // console.log('ret:', retval);
-      return  retval;
-    }, 
-
-    updatePos: function(newcoord) {  coords = newcoord; },     
-
     init: function() {
       var cnv;
       if (this.initDone()) { return; } // console.log('Map.init already done?!');
-
-      // term = document.getElementById("term"); // Only call when doc/dom has loaded.
-      // children = term.children;
-
-      // this.map2screen();
 
       cnv = document.getElementById("canvas1"); // Only call when doc/dom has loaded.
       ctx = cnv.getContext("2d");
       this.map2screenB();
  
-      //Map = mapModule; //this; // who is 'this', here?
       isInitDone = 1;
     } // init.
   }; // module.
 
   Map = module; 
 
-  // JG: FIXME/CHECK: Is this sufficient to pick up this scope,
-  // or do we need two functions? (an inner function that sees the outer scope?)
-  // At least I think, that test1 and init can see local var 'map' from now on.
-  // Hmm, it actually seems this is sufficient!
-
-  //Map.init();
-   // function mapModule() {} // A local function   // mapModule.
-  // mapModule.init(); // return mapModule;  
-
 } () ); // Map module.
 
-
-//Map.init();
-// Map.test1(2);
 

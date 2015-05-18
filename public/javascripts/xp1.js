@@ -134,6 +134,7 @@ I still need to get 'coords' out of map!
 // From mexa.html:
 document.addEventListener('DOMContentLoaded',function() { Map.init(); }); // Consider Mob.init too.
 
+/*
 document.addEventListener('keydown', function(e) {
   var newpos,oldpos;
 
@@ -152,3 +153,4 @@ document.addEventListener('keydown', function(e) {
   Map.map2screenB(oldpos.x, oldpos.y);
   Map.map2screenB(newpos.x, newpos.y);
 });
+*/
