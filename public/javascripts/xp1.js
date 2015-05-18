@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
   //var d = 4; // delta-move-size.
   //var mobElms = {}; // DOM elements.
   //var mobs = {}; // Model objects. // PROBLEM: Must go to shared module.
-  var ownClientId = 0; // undefined at start.
+  // var ownClientId = 0; // undefined at start.
 
   socket = io.connect(); // how do we know we have io available?! is it layout.jade load-order?
 
@@ -109,15 +109,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.addEventListener('keydown', function(e) {
     // var mob = mobs[ownClientId];
-    var mob2 = Mob.at(ownClientId);
+    var mob2 = Mob.at(Mob.ownClientID());
     var oldX = mob2.x, oldY = mob2.y;
+    var newX = oldX, newY = oldY;
     switch (e.keyCode) { // Chrome..? Also works in FF.
-    case 37: mob2.x -=1; break; // 'ArrowLeft'
-    case 38: mob2.y -=1; break; // 'ArrowUp'  
-    case 39: mob2.x +=1; break; // 'ArrowRight'
-    case 40: mob2.y +=1; break; // 'ArrowDown'
+    case 37: newX -=1; break; // 'ArrowLeft'
+    case 38: newY -=1; break; // 'ArrowUp'  
+    case 39: newX +=1; break; // 'ArrowRight'
+    case 40: newY +=1; break; // 'ArrowDown'
+    default: return;
     }
-    // moveMob(mob.id); // ATM necessary, because broadcast doesn't hit yourself..
+    
+    e.preventDefault();
+    if (Map.posBlocked({x:newX,y:newY})) { console.log("blocked!"); return; }
+
+    mob2.x = newX; mob2.y = newY;
+    // ATM necessary, because broadcast doesn't hit yourself..
     updateMobPos(mob2.id, oldX, oldY);
     socket.emit('move-c-s', mob2);      
   }); // on-keydown.

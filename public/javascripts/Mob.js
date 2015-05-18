@@ -12,6 +12,8 @@ function() { // An anonymous function, to yield an isolated scope for our module
     return mobs[mobId];
   }
 
+  function ownClientID() { return ownClientId; }
+
   function initMob(assignedId) {
     var mobColors = [ // 8
       "#f00",
@@ -41,6 +43,7 @@ function() { // An anonymous function, to yield an isolated scope for our module
   Mob = { // INTERFACE module;
     mobs: mobs,
     initMob: initMob,
-    at: at
+    at: at,
+    ownClientID: ownClientID
   } 
 } () ); // Mob module.

@@ -98,7 +98,7 @@ function() { // An anonymous function, to yield an isolated scope for our module
   		for (i=miny; i<=maxy; ++i) { // map.length
   			y = i*side;
         // console.log('i:',i,coords.y);
-  			row = (i != coords.y) ? map[i] : this.atRow(i);
+  			row = map[i]; //(i != coords.y) ? map[i] : this.atRow(i);
         // console.log('row:',row, 'j:',j);
         for (j=minx; j<=maxx; ++j) { // row.length
           x = j*side;
@@ -110,7 +110,7 @@ function() { // An anonymous function, to yield an isolated scope for our module
   		} // for i.
 
       // fixme: draw @'s: Can't do, while coords are in xp1 instead of map.
-      console.log('m:',Mob.mobs);
+      // console.log('m:',Mob.mobs);
       for (i in Mob.mobs) {
         mob = Mob.at(i);
         // console.log('i:',i);
