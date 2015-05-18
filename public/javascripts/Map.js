@@ -70,7 +70,8 @@ function() { // An anonymous function, to yield an isolated scope for our module
 
     map2screenB: function(pos_x, pos_y) { // "pos is the cell we invalidate/draw"
     	var i,j,row,y,x,side=12, curColor, 
-    	  minx=0,miny=0,maxx=map[0].length-1,maxy=map.length-1;
+    	  minx=0,miny=0,maxx=map[0].length-1,maxy=map.length-1,
+        mob;
 
     	if (!(pos_x === undefined)) {
     		minx=maxx=pos_x; miny=maxy=pos_y;
@@ -109,8 +110,12 @@ function() { // An anonymous function, to yield an isolated scope for our module
   		} // for i.
 
       // fixme: draw @'s: Can't do, while coords are in xp1 instead of map.
+      console.log('m:',Mob.mobs);
       for (i in Mob.mobs) {
-        ctx.fillText('§',i.x+side*0.5,i.y+side*0.5);        
+        mob = Mob.at(i);
+        // console.log('i:',i);
+        ctx.fillStyle = mob.mobColor;
+        ctx.fillText('§',mob.x+side*0.5,mob.y+side*0.5);        
       }      
     }, // map2screenB.
 
