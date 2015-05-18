@@ -12,6 +12,13 @@ function() { // An anonymous function, to yield an isolated scope for our module
     return mobs[mobId];
   }
 
+  function setMobs(initModel) {
+    mobs = initModel;
+  }
+  function getMobs() {
+    return mobs;
+  }
+
   function ownClientID() { return ownClientId; }
 
   function initMob(assignedId) {
@@ -41,7 +48,8 @@ function() { // An anonymous function, to yield an isolated scope for our module
 
 
   Mob = { // INTERFACE module;
-    mobs: mobs,
+    mobs: getMobs,
+    setMobs: setMobs,
     initMob: initMob,
     at: at,
     ownClientID: ownClientID

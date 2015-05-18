@@ -105,8 +105,11 @@ function() { // An anonymous function, to yield an isolated scope for our module
   		} // for i.
 
       // fixme: draw @'s: Can't do, while coords are in xp1 instead of map.
-      for (i in Mob.mobs) {
+      for (i in Mob.mobs()) {
         mob = Mob.at(i);
+        if (mob == undefined) {
+          console.log('argh',Mob.mobs());
+        }
         ctx.fillStyle = mob.mobColor;
         ctx.fillText('@',(mob.x+0.5)*side,(mob.y+0.5)*side);        
       }      

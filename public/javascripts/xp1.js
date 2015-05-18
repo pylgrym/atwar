@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   socket.on('welcome', function (data_json) {
     console.log('client-welcome, assigned client ID:', data_json);
-    Mob.mobs = data_json.initModel; // does this work?
+    Mob.setMobs(data_json.initModel); // It seems to work..
     Mob.initMob(data_json.newClientId);
     // We must update ALL mobs on start-up.
     Map.map2screenB();
