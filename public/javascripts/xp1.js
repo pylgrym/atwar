@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function updateMobPos(mob_id, oldX, oldY) {  // NEW behaviour:
-    var mob2 = Mobs.at(mob_id);
+    var mob2 = Mob.at(mob_id);
     // Map.updatePos(newpos);
     Map.map2screenB(oldX, oldY);
     Map.map2screenB(mob2.x, mob2.y);    
