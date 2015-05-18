@@ -115,7 +115,7 @@ function() { // An anonymous function, to yield an isolated scope for our module
         mob = Mob.at(i);
         // console.log('i:',i);
         ctx.fillStyle = mob.mobColor;
-        ctx.fillText('§',mob.x+side*0.5,mob.y+side*0.5);        
+        ctx.fillText('§',(mob.x+0.5)*side,(mob.y+0.5)*side);        
       }      
     }, // map2screenB.
 
