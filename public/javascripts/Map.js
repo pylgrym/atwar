@@ -107,7 +107,7 @@ function() { // An anonymous function, to yield an isolated scope for our module
   		} // for i.
 
       // fixme: draw @'s: Can't do, while coords are in xp1 instead of map.
-      for (i in mobs) {
+      for (i in Mob.mobs) {
         ctx.fillText('§',i.x+side*0.5,i.y+side*0.5);        
       }      
     }, // map2screenB.
@@ -150,18 +150,7 @@ function() { // An anonymous function, to yield an isolated scope for our module
       return this.subst( map[coords.y], coords.x, '@');
     }, 
 
-    updatePos: function(newcoord) { 
-      coords = newcoord; 
-
-    	//var oldy = coords.y;
-    	//var row = '';
-
-      // try to update textContents:
-      //row = map[coords.y]; 
-      //row = this.subst(row, coords.x, '@');
-      // children[oldy].textContent = map[oldy];
-      // children[coords.y].textContent = row;
-    },     
+    updatePos: function(newcoord) {  coords = newcoord; },     
 
     init: function() {
       var cnv;
