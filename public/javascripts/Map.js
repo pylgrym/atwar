@@ -61,9 +61,6 @@ function() { // An anonymous function, to yield an isolated scope for our module
 	"#..............................#...........................#",
 	"############################################################"
   ], // end var map.
-  // coords = { x: 10, y: 4 },
-  // term = '', //document.getElementById("term"), // Doesn't work, because page hasn't loaded yet!
-  // children = '', //term.children,
   isInitDone = 0,
   ctx,
   module = { // Our actual module as a hash:
@@ -97,12 +94,10 @@ function() { // An anonymous function, to yield an isolated scope for our module
       ctx.fillStyle = "orange";
   		for (i=miny; i<=maxy; ++i) { // map.length
   			y = i*side;
-        // console.log('i:',i,coords.y);
-  			row = map[i]; //(i != coords.y) ? map[i] : this.atRow(i);
-        // console.log('row:',row, 'j:',j);
+  			row = map[i]; 
         for (j=minx; j<=maxx; ++j) { // row.length
           x = j*side;
-          curColor = "#0d6"; // (i==coords.y && j==coords.x) ? "#ccf" : "#0d6"; // "#f80";
+          curColor = "#0d6";
           if (ctx.fillStyle != curColor) { ctx.fillStyle = curColor; }
           //ctx.fillRect(x,y,side,side);
           ctx.fillText(row[j],x+side*0.5,y+side*0.5);
@@ -110,12 +105,10 @@ function() { // An anonymous function, to yield an isolated scope for our module
   		} // for i.
 
       // fixme: draw @'s: Can't do, while coords are in xp1 instead of map.
-      // console.log('m:',Mob.mobs);
       for (i in Mob.mobs) {
         mob = Mob.at(i);
-        // console.log('i:',i);
         ctx.fillStyle = mob.mobColor;
-        ctx.fillText('§',(mob.x+0.5)*side,(mob.y+0.5)*side);        
+        ctx.fillText('@',(mob.x+0.5)*side,(mob.y+0.5)*side);        
       }      
     }, // map2screenB.
 
@@ -132,26 +125,6 @@ function() { // An anonymous function, to yield an isolated scope for our module
   	  right = str.substr(pos+1);
   	  return (left+sub+right);
   	}, // subst
-
-    /* DISABLED TOGETHER!
-    keymove: function(ev, coord) { // FIXME, MUST GO!
-      var newpos = { x: coord.x, y: coord.y };
-      switch (ev.keyCode) { // Chrome..? Also works in FF.
-      case 37:  newpos.x-=1; break; // 'ArrowLeft'
-      case 38 : newpos.y-=1; break; // 'ArrowUp'  
-      case 39:  newpos.x+=1; break; // 'ArrowRight'
-      case 40 : newpos.y+=1; break; // 'ArrowDown'
-  	  default: return 0; // Ignore other keys.  zero counts as false.
-  	  }
-      return newpos;
-    },
-
-    getCoords: function() { return coords; }, // FIXME, MUST GO!    
-
-    updatePos: function(newcoord) {  coords = newcoord; },     // FIXME, MUST GO!
-
-    // atRow: function() {  return this.subst( map[coords.y], coords.x, '@'); }, // FIXME, MUST GO!
-    */
 
     initDone: function() { return isInitDone; }, 
 
