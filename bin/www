@@ -22,15 +22,23 @@ function idCounter() {
   return tmp;
 }
 
+var mobs = {} // (second shame - move to module.)
 
-io_socket.on('connection', function (socket) {
+io_socket.on('connection', function (c_socket) {
     var mySocketId = idCounter();
-    // console.log(socket)
-    socket.emit('welcome', { message: 'Initial welcome', clientId: mySocketId });
+    
+    c_socket.emit('welcome', { 
+      message: 'Initial welcome', 
+      newClientId: mySocketId,
+      initModel: mobs
+    });
 
-    socket.on('move-c-s', function (data) {
+    c_socket.on('move-c-s', function (data) {
         console.log('on move', data);
-        socket.broadcast.emit('move-s-c', data);
+
+        mobs[data.id] = data; // keep an updated model here. // FIXME: We only update model after first move! Proposal:  clients should do an initial no-op move after welcome?
+
+        c_socket.broadcast.emit('move-s-c', data);
     });
 
     // setInterval( function() { socket.emit('message', {'date': new Date()}); }, 10000);    

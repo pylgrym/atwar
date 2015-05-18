@@ -35,9 +35,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   socket.on('welcome', function (data_json) {
     console.log('client-welcome, assigned client ID:', data_json);
-    Mob.initMob(data_json.clientId);
-    // problem - this should give me ALL mobs, instead of just own mob.
-    // (we need own id as well as info on all other mobs.)
+    Mob.mobs = data_json.initModel; // does this work?
+    Mob.initMob(data_json.newClientId);
+    // We must update ALL mobs on start-up.
+    Map.map2screenB();
   });
 
   socket.on('move-s-c', function (mob) {
@@ -70,6 +71,8 @@ document.addEventListener('DOMContentLoaded', function() {
 }); // on-DCL.
 
 
-// From mexa.html:
-document.addEventListener('DOMContentLoaded',function() { Map.init(); }); // Consider Mob.init too.
+document.addEventListener('DOMContentLoaded',function() { 
+  Map.init(); 
+ // Consider Mob.init too.
+});
 
