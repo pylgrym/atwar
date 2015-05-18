@@ -28,8 +28,8 @@ function() { // An anonymous function, to yield an isolated scope for our module
     ownClientId = assignedId;
     mobColor = mobColors[ (ownClientId%8) ];
     mob = { 
-      x: 50, 
-      y: 50, 
+      x: 10, 
+      y: 10, 
       id: ownClientId,
       mobColor: mobColor      
     };

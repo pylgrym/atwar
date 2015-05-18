@@ -96,9 +96,9 @@ function() { // An anonymous function, to yield an isolated scope for our module
       ctx.fillStyle = "orange";
   		for (i=miny; i<=maxy; ++i) { // map.length
   			y = i*side;
-        console.log('i:',i,coords.y);
+        // console.log('i:',i,coords.y);
   			row = (i != coords.y) ? map[i] : this.atRow(i);
-        console.log('row:',row, 'j:',j);
+        // console.log('row:',row, 'j:',j);
         for (j=minx; j<=maxx; ++j) { // row.length
           x = j*side;
           curColor = (i==coords.y && j==coords.x) ? "#ccf" : "#0d6"; // "#f80";
@@ -150,9 +150,9 @@ function() { // An anonymous function, to yield an isolated scope for our module
 
     atRow: function() { 
       var retval;
-      console.log('atRow',coords);
+      // console.log('atRow',coords);
       retval = this.subst( map[coords.y], coords.x, '@');
-      console.log('ret:', retval);
+      // console.log('ret:', retval);
       return  retval;
     }, 
 

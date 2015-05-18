@@ -62,8 +62,8 @@ document.addEventListener('DOMContentLoaded', function() {
     ownClientId = assignedId;
     mobColor = mobColors[ (ownClientId%8) ];
     mob = { 
-      x: 50, 
-      y: 50, 
+      x: 10, 
+      y: 10, 
       id: ownClientId,
       mobColor: mobColor      
     };
