@@ -61,7 +61,7 @@ function() { // An anonymous function, to yield an isolated scope for our module
 	"#..............................#...........................#",
 	"############################################################"
   ], // end var map.
-  coords = { x: 10, y: 4 },
+  // coords = { x: 10, y: 4 },
   // term = '', //document.getElementById("term"), // Doesn't work, because page hasn't loaded yet!
   // children = '', //term.children,
   isInitDone = 0,
@@ -102,7 +102,7 @@ function() { // An anonymous function, to yield an isolated scope for our module
         // console.log('row:',row, 'j:',j);
         for (j=minx; j<=maxx; ++j) { // row.length
           x = j*side;
-          curColor = (i==coords.y && j==coords.x) ? "#ccf" : "#0d6"; // "#f80";
+          curColor = "#0d6"; // (i==coords.y && j==coords.x) ? "#ccf" : "#0d6"; // "#f80";
           if (ctx.fillStyle != curColor) { ctx.fillStyle = curColor; }
           //ctx.fillRect(x,y,side,side);
           ctx.fillText(row[j],x+side*0.5,y+side*0.5);
