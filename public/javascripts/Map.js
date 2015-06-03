@@ -66,7 +66,7 @@ function() { // An anonymous function, to yield an isolated scope for our module
   module = { // Our actual module as a hash:
 
     map2screenB: function(pos_x, pos_y) { // "pos is the cell we invalidate/draw"
-    	var i,j,row,y,x,side=12, curColor, 
+    	var i,j,row,y,x,side=20, curColor, 
     	  minx=0,miny=0,maxx=map[0].length-1,maxy=map.length-1,
         mob;
 
@@ -77,7 +77,7 @@ function() { // An anonymous function, to yield an isolated scope for our module
       ctx.fillStyle = "#110";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.font = "12px sans-serif"; // monospace"; //serif";
+      ctx.font = "20px sans-serif"; // monospace"; //serif";
 
       // Thoughts: I might as well erase full rect (it's doublebuffered).
       // Thoughts: only change ctx-color if different.
